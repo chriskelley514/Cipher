@@ -1,38 +1,41 @@
-# Cipher
-AES Encryption and Decryption of Files
-This project provides a simple and functional implementation of file encryption and decryption using AES (Advanced Encryption Standard) in CFB mode with PKCS7 padding. It's built with the cryptography library in Python.
+AES File Encryption and Decryption (Python)
 
-Features:
-Encrypts any file using a symmetric AES key
+This script provides functions to securely encrypt and decrypt files using AES encryption with the Python `cryptography` library.
 
-Decrypts encrypted files using the same key
+Features
 
-Uses Base64 encoding to store encrypted output
+- AES encryption in Cipher Feedback (CFB) mode
+- PKCS7 padding for block alignment
+- Base64 encoding for output files
+- Simple file-based input and output
 
-Includes built-in example usage
+How It Works
 
-Requirements:
--Python 3.x
--cryptography library
-Install with:
-pip install cryptography
+- encrypt_file(input_file_path, output_file_path, key):
+  Reads a plaintext file, pads it, encrypts using AES-CFB with a fixed IV, and writes the encrypted data (base64-encoded) to the output file.
 
-Usage:
--Set the key
-The AES key must be 16, 24, or 32 bytes long.
-encryption_key = b'sfnt3iof2354dwe6'  # 16-byte key
--Provide input and output file paths
+- decrypt_file(input_file_path, output_file_path, key):
+  Reads an encrypted file, decodes base64, extracts the IV, decrypts the ciphertext, removes padding, and writes the plaintext to the output file.
+
+Usage Example
+
+encryption_key = b'sfnt3iof2354dwe6'  # Must be 16 bytes for AES-128
 input_file = 'input.txt'
 encrypted_file = 'encrypted_file.txt'
 decrypted_file = 'decrypted_file.txt'
--Run encryption and decryption
+
 encrypt_file(input_file, encrypted_file, encryption_key)
 decrypt_file(encrypted_file, decrypted_file, encryption_key)
 
-Security Notes:
-The IV (Initialization Vector) is currently hardcoded as 16 zero bytes. For production, use a secure random IV and store it with the ciphertext.
+Notes
 
-Do not hardcode keys in real-world applications. Use secure key management practices.
+- The initialization vector (IV) is currently fixed as 16 zero bytes (b'\0' * 16). For real-world security, use a random IV for each encryption and store it with the ciphertext.
+- The key must be 16 bytes long (AES-128). Adjust for AES-192 or AES-256 by changing the key length accordingly.
+- Base64 encoding ensures encrypted files are text-friendly for storage or transfer.
+- Requires the `cryptography` library (`pip install cryptography`).
 
-License:
-This project is open source and free to use under the MIT License.
+License
+
+MIT License
+
+Author: Christopher Kelley
